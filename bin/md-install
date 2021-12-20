@@ -391,6 +391,6 @@ if [[ $hasProductTypeForCommandLineTool != "true" ]]; then
 	writeDictToSpecification "$specificationFile" "$toolDict"
 fi
 
-ehco '如果遇到打不开Xcode,可能需要处理: https://github.com/AloneMonkey/MonkeyDev/issues/297'
+echo '如果遇到打不开Xcode,可能需要处理: https://github.com/AloneMonkey/MonkeyDev/issues/297'
 
 exit 0
