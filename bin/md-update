@@ -151,6 +151,9 @@ find $MonkeyDevPath/templates -type f -name "fishhook.c" -exec cp $MonkeyDevPath
 rm -rf $MonkeyDevPath/fishhook
 echo -e "fishhook更新完毕!"
 
+# 安装libstd++
+downloadGithubTarball "https://codeload.github.com/devdawei/libstdc-/tar.gz/master" "$MonkeyDevPath/libstdc-" "libstdc-"
+
 #更新frida-ios-dump
 echo "Downloading frida-ios-dump from Github..."
 downloadFile "https://raw.githubusercontent.com/AloneMonkey/frida-ios-dump/3.x/dump.py" "$MonkeyDevPath/bin/dump.py"
