@@ -310,6 +310,14 @@ fi
 downloadGithubTarball "https://codeload.github.com/AloneMonkey/MonkeyDev/tar.gz/$branch" "$MonkeyDevPath" "MonkeyDev base"
 downloadGithubTarball "https://codeload.github.com/AloneMonkey/MonkeyDev-Xcode-Templates/tar.gz/$branch" "$MonkeyDevPath/templates" "Xcode templates"
 
+# 更新fishhook
+downloadGithubTarball "https://codeload.github.com/facebook/fishhook/tar.gz/main" "$MonkeyDevPath/fishhook" "fishhook"
+
+find $MonkeyDevPath/templates -type f -name "fishhook.h" -exec cp $MonkeyDevPath/fishhook/fishhook.h {} \;
+find $MonkeyDevPath/templates -type f -name "fishhook.c" -exec cp $MonkeyDevPath/fishhook/fishhook.c {} \;
+rm -rf $MonkeyDevPath/fishhook
+echo -e "fishhook更新完毕!"
+
 #下载frida-ios-dump
 echo "Downloading frida-ios-dump from Github..."
 downloadFile "https://raw.githubusercontent.com/AloneMonkey/frida-ios-dump/3.x/dump.py" "$MonkeyDevPath/bin/dump.py"
