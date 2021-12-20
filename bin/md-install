@@ -358,6 +358,11 @@ hasPackageTypeForCommandLineTool=`doesFileContain "$specificationFile" 'com.appl
 hasProductTypeForCommandLineTool=`doesFileContain "$specificationFile" 'com.apple.product-type.tool'`
 
 macosxSDKSpecificationsPath=$macosSdkPlatformPath/Developer/Library/Xcode/Specifications
+
+# 判断是否是新版本xcode
+if [ $(xcrun xcodebuild -version | awk '{print $2}' | head -1 | cut -f 1 -d '.') -ge 12 ]; then
+	macosxSDKSpecificationsPath=$macosSdkPlatformPath/Developer/Library/Xcode/PrivatePlugIns/IDEOSXSupportCore.ideplugin/Contents/Resources
+fi
 packageTypesForMacOSXPath="$macosxSDKSpecificationsPath/MacOSX Package Types.xcspec"
 productTypesForMacOSXPath="$macosxSDKSpecificationsPath/MacOSX Product Types.xcspec"
 
@@ -373,5 +378,7 @@ if [[ $hasProductTypeForCommandLineTool != "true" ]]; then
 	toolDict=`readXcodeSpecificationById "$productTypesForMacOSXPath" "com.apple.product-type.tool"`
 	writeDictToSpecification "$specificationFile" "$toolDict"
 fi
+
+ehco '如果遇到打不开Xcode,可能需要处理: https://github.com/AloneMonkey/MonkeyDev/issues/297'
 
 exit 0
