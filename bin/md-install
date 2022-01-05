@@ -302,7 +302,7 @@ function downloadFrida() {
     	curl -L -O https://github.com/frida/frida/releases/download/${version}/frida-gadget-${version}-ios-universal.dylib.xz \
     	&& unxz frida-gadget-${version}-ios-universal.dylib.xz \
     	&& mv frida-gadget-${version}-ios-universal.dylib $MonkeyDevPath/Frameworks/FridaGadget.dylib \
-		&& lipo -remove x86_64 $MonkeyDevPath/Frameworks/FridaGadget.dylib \
+		&& lipo -remove x86_64 $MonkeyDevPath/Frameworks/FridaGadget.dylib -output $MonkeyDevPath/Frameworks/FridaGadget.dylib \
     	&& rm -rf frida-gadget-${version}-ios-universal.dylib.xz \
     	&& echo "install success ${version}" || echo "install error"
 	else
