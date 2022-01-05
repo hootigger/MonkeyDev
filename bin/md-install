@@ -295,6 +295,21 @@ function writeDictToSpecification(){ #args: filePath, content
 	/usr/libexec/PlistBuddy -x -c "merge $tempfile 0" "$filePath" > /dev/null
 }
 
+function downloadFrida() {
+	version="15.1.14"
+	if [[ ! -f "$MonkeyDevPath/Frameworks/FridaGadget.dylib" ]]; then
+		echo "start download frida..."
+    	curl -L -O https://github.com/frida/frida/releases/download/${version}/frida-gadget-${version}-ios-universal.dylib.xz \
+    	&& unxz frida-gadget-${version}-ios-universal.dylib.xz \
+    	&& mv frida-gadget-${version}-ios-universal.dylib $MonkeyDevPath/Frameworks/FridaGadget.dylib \
+		&& lipo -remove x86_64 $MonkeyDevPath/Frameworks/FridaGadget.dylib \
+    	&& rm -rf frida-gadget-${version}-ios-universal.dylib.xz \
+    	&& echo "install success ${version}" || echo "install error"
+	else
+    	echo "FridaGadget has exist"
+	fi
+}
+
 # start it
 # 创建/opt/MonkeyDev
 mkdir -p "$MonkeyDevPath" || \
@@ -317,6 +332,8 @@ find $MonkeyDevPath/templates -type f -name "fishhook.h" -exec cp $MonkeyDevPath
 find $MonkeyDevPath/templates -type f -name "fishhook.c" -exec cp $MonkeyDevPath/fishhook/fishhook.c {} \;
 rm -rf $MonkeyDevPath/fishhook
 echo -e "fishhook更新完毕!"
+
+downloadFrida
 
 # 安装libstd++
 downloadGithubTarball "https://codeload.github.com/devdawei/libstdc-/tar.gz/master" "$MonkeyDevPath/libstdc-" "libstdc-"
