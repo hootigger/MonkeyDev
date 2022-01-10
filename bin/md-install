@@ -308,6 +308,24 @@ function downloadFrida() {
 	else
     	echo "FridaGadget has exist"
 	fi
+
+	if [[ ! -f "$MonkeyDevPath/Frameworks/FridaGadget.config" ]]; then
+		cat > $MonkeyDevPath/Frameworks/FridaGadget.config << EOF
+{
+    "interaction": {
+        "type": "listen",
+        "address": "127.0.0.1",
+        "port": 27042,
+        "on_port_conflict": "fail",
+        "on_load": "resume"
+    },
+    "runtime": "v8"
+}
+EOF 
+
+	else
+		echo "FridaGadget.config has exist"
+	fi
 }
 
 # start it
